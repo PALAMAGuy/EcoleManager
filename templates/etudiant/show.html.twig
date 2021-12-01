@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello EtudiantController!{% endblock %}
+
+{% block body %}
+
+<button><a href="/addEtudiant">Ajouter etudiant</a></button>
+
+<h1> Liste des étudiants </h1>
+
+<table id="table">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+        </tr>
+
+    </thead>
+    <tbody>
+    {% for etudiant in liste_etudiant %}
+        <tr>
+            <td>
+            {{ etudiant.getNom()  }}
+            </td>
+            <td>
+            {{ etudiant.getPrenom()  }}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
