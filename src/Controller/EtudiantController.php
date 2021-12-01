@@ -74,4 +74,44 @@ class EtudiantController extends AbstractController
 
     }
 
+    /**
+     * @Route("/editEtudiant/{id}", name="editEtudiant")
+     */
+    public function editEtudiant(Request $request, ManagerRegistry $doctrine, int $id ): Response
+    {
+        $repo = $doctrine->getManager()->getRepository(Etudiant::class);
+
+        $etudiant = $repo->find($id);
+
+        //$etudiant = new Etudiant();
+       
+        $form = $this->createForm(EtudiantFormType::class,$etudiant);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $etudiant = $form->getData();
+
+            $em = $doctrine->getManager();
+            $em->persist($etudiant);
+            $em->flush();
+
+            $repo = $doctrine->getManager()->getRepository(Etudiant::class);
+
+            $liste_etudiant = $repo->findAll();
+    
+            return $this->render('etudiant/show.html.twig', [
+                'controller_name' => 'EtudiantController',
+                'liste_etudiant' => $liste_etudiant
+            ]);
+            
+        }
+
+        return $this->renderForm("etudiant/edit.html.twig",
+        ["formulaire" => $form]
+        );
+
+
+    }
+
 }

@@ -4,7 +4,7 @@
 
 {% block body %}
 
-<button><a href="/addEtudiant">Ajouter etudiant</a></button>
+<button><a href="{{url('addEtudiant')}}">Ajouter etudiant</a></button>
 
 <h1> Liste des étudiants </h1>
 
@@ -24,6 +24,9 @@
             </td>
             <td>
             {{ etudiant.getPrenom()  }}
+            </td>
+            <td>
+            <a href="{{url('editEtudiant',{'id': etudiant.getId()})}}">Détails</a>
             </td>
         </tr>
     {% endfor %}
